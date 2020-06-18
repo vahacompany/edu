@@ -11,7 +11,13 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
-	@Column(nullable=false, length=20)
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	@Column(nullable=false, length=20, unique=true)
 	private String userId;
 	private String password;
 	private String userName;
@@ -20,12 +26,32 @@ public class User {
 	public String getUserId() {
 		return userId;
 	}
+	public boolean matchId(Long paramId) {
+		if (paramId == null) {
+			return false;
+		}
+		
+		return paramId.equals(id);
+	}
+	
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getPassword() {
 		return password;
 	}
+	
+	public boolean matchPassword(String paramPassword) {
+		if (paramPassword == null) {
+			return false;
+		}
+		
+		if (paramPassword.equals(password)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
