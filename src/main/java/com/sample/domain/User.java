@@ -11,6 +11,12 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	@Column(nullable=false, length=20)
 	private String userId;
 	private String password;
@@ -45,6 +51,11 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", userName=" + userName + ", email=" + email + "]";
+	}
+	public void update(User newUser) {
+		this.userName = newUser.userName;
+		this.email = newUser.email;
+		
 	}
 	
 	
