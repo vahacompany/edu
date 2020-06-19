@@ -36,8 +36,8 @@ public class UserController {
 			return "redirect:/users/loginForm";
 		}
 		
-		if (user.matchPassword(user.getPassword())) {
-			System.out.println("Login Failed!!!");
+		if (!user.matchPassword(password)) {
+			System.out.println("Login Failure!");
 			return "redirect:/users/loginForm";
 		}
 		

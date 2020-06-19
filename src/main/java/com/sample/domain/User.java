@@ -2,81 +2,69 @@ package com.sample.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-public class User {
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+public class User extends AbstractEntity {
+
 	@Column(nullable=false, length=20, unique=true)
+	@JsonProperty
 	private String userId;
+
+	@JsonIgnore
 	private String password;
+
+	@JsonProperty
 	private String userName;
+
+	@JsonProperty
 	private String email;
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	
 	public String getUserId() {
 		return userId;
 	}
-	public boolean matchId(Long paramId) {
-		if (paramId == null) {
-			return false;
-		}
-		
-		return paramId.equals(id);
-	}
-	
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getPassword() {
-		return password;
-	}
-	
-	public boolean matchPassword(String paramPassword) {
-		if (paramPassword == null) {
-			return false;
-		}
-		
-		if (paramPassword.equals(password)) {
-			return true;
-		}
-		return false;
-	}
-	
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getUserName() {
-		return userName;
+	
+	public boolean matchId(Long newId) {
+		if (newId == null) {
+			return false;
+		}
+		
+		return newId.equals(getId());
 	}
-	public void setUserName(String userName) {
+	
+	public boolean matchPassword(String newPassword) {
+		if (newPassword == null) {
+			return false;
+		}
+		
+		return newPassword.equals(password);
+	}
+	
+	public void setName(String userName) {
 		this.userName = userName;
-	}
-	public String getEmail() {
-		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", password=" + password + ", userName=" + userName + ", email=" + email + "]";
-	}
 	public void update(User newUser) {
+		this.password = newUser.password;
 		this.userName = newUser.userName;
 		this.email = newUser.email;
-		
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + super.toString() + ", userId=" + userId + ", password=" + password + ", userName=" + userName + ", email="
+				+ email + "]";
+	}
 }
